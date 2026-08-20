@@ -58,8 +58,13 @@ def card(
     title_size: float = 12,
     body_size: float = 9,
 ) -> None:
-    wrap_width = max(20, int(width * 12))
+    horizontal_padding = 0.24
+    wrap_width = max(16, int((width - 2 * horizontal_padding) * 11.5))
     wrapped_body = "\n".join(textwrap.fill(part, wrap_width) for part in body.splitlines())
+    title_height = title_size / 72 * 1.15
+    title_body_gap = 0.22
+    top_padding = 0.25 if height <= 1.5 else min(0.40, height * 0.20)
+    content_top = y + height - top_padding
     ax.add_patch(
         patches.FancyBboxPatch(
             (x, y),
@@ -73,11 +78,17 @@ def card(
     )
     ax.add_patch(patches.Rectangle((x, y + height - 0.045), width, 0.045, color=accent, lw=0))
     ax.text(
-        x + 0.22, y + height - 0.25, title, color=TEXT, fontsize=title_size, weight="bold", va="top"
+        x + horizontal_padding,
+        content_top,
+        title,
+        color=TEXT,
+        fontsize=title_size,
+        weight="bold",
+        va="top",
     )
     ax.text(
-        x + 0.22,
-        y + height - 0.68,
+        x + horizontal_padding,
+        content_top - title_height - title_body_gap,
         wrapped_body,
         color=MUTED,
         fontsize=body_size,
@@ -329,9 +340,9 @@ def model_slide(pdf: PdfPages) -> None:
     card(
         ax,
         0.7,
-        3.82,
+        3.58,
         2.72,
-        1.82,
+        2.06,
         "38% · SUPERVISED",
         "XGBoost challenger selected against a class-weighted logistic baseline using validation PR-AUC and operating constraints.",
         accent=GREEN,
@@ -339,9 +350,9 @@ def model_slide(pdf: PdfPages) -> None:
     card(
         ax,
         3.78,
-        3.82,
+        3.58,
         2.72,
-        1.82,
+        2.06,
         "12% · ANOMALY",
         "Isolation Forest detects unusual combinations; empirical calibration maps raw scores into a stable 0–1 range.",
         accent=PURPLE,
@@ -349,9 +360,9 @@ def model_slide(pdf: PdfPages) -> None:
     card(
         ax,
         6.86,
-        3.82,
+        3.58,
         2.72,
-        1.82,
+        2.06,
         "35% · BEHAVIOR",
         "Velocity, failed login, device transition, amount deviation, and loan-to-income risk signals.",
         accent=AMBER,
@@ -359,9 +370,9 @@ def model_slide(pdf: PdfPages) -> None:
     card(
         ax,
         9.94,
-        3.82,
+        3.58,
         2.72,
-        1.82,
+        2.06,
         "15% · GRAPH",
         "Shared device, IP, and bank-account cardinality expose coordinated identity rings without a heavy graph platform.",
         accent=BLUE,
@@ -594,18 +605,18 @@ def evidence_slide(pdf: PdfPages) -> None:
     )
     ax.add_patch(
         patches.FancyBboxPatch(
-            (7.55, 0.82),
+            (7.55, 0.66),
             4.94,
-            1.06,
+            1.24,
             boxstyle="round,pad=.02,rounding_size=.08",
             facecolor="#342815",
             edgecolor=AMBER,
         )
     )
-    ax.text(7.78, 1.57, "INTERPRETATION", color=AMBER, fontsize=8, weight="bold")
+    ax.text(7.78, 1.59, "INTERPRETATION", color=AMBER, fontsize=8, weight="bold")
     ax.text(
         7.78,
-        1.28,
+        1.31,
         textwrap.fill(
             "These numbers verify code, leakage controls, and demo separability. They do not estimate real lending performance.",
             55,
@@ -810,9 +821,9 @@ def engineering_slide(pdf: PdfPages) -> None:
     card(
         ax,
         0.72,
-        4.13,
+        3.98,
         3.55,
-        1.62,
+        1.77,
         "BACKEND",
         "125 tests including feedback + random stream\n81% backend/training coverage\nRuff clean",
         accent=GREEN,
@@ -821,9 +832,9 @@ def engineering_slide(pdf: PdfPages) -> None:
     card(
         ax,
         4.89,
-        4.13,
+        3.98,
         3.55,
-        1.62,
+        1.77,
         "FRONTEND",
         "Vitest component suite\nTypeScript production build\n0 npm audit vulnerabilities",
         accent=BLUE,
@@ -832,9 +843,9 @@ def engineering_slide(pdf: PdfPages) -> None:
     card(
         ax,
         9.06,
-        4.13,
+        3.98,
         3.55,
-        1.62,
+        1.77,
         "END TO END",
         "Real artifacts loaded\n11-event replay deterministic\nHTTP/API and bundle smoke checks",
         accent=PURPLE,
@@ -846,7 +857,7 @@ def engineering_slide(pdf: PdfPages) -> None:
             "README: one-command bootstrap, local run, full-data training, Compose, tests, and troubleshooting.",
             "Versioned model manifests and generated evaluation, hybrid, plot, and responsible-AI reports.",
             "Docker Compose: React, FastAPI, PostgreSQL, Redis, health checks, non-root processes.",
-            "Git is initialized on main; the student must commit with their identity and push to their own GitHub repository.",
+            "GitHub main is committed and pushed; the private repository is ready to share with reviewers or make public.",
         ],
         0.75,
         2.96,
@@ -903,23 +914,29 @@ def roadmap_slide(pdf: PdfPages) -> None:
         )
     ax.add_patch(
         patches.FancyBboxPatch(
-            (1.65, 1.18),
-            10.03,
-            1.12,
+            (0.72, 0.98),
+            11.89,
+            1.52,
             boxstyle="round,pad=.025,rounding_size=.12",
             facecolor=SURFACE,
             edgecolor=GREEN,
         )
     )
     ax.text(
-        6.66, 1.80, "KEEP THE CORE INVARIANT", color=GREEN, fontsize=8.5, weight="bold", ha="center"
+        6.666,
+        1.91,
+        "KEEP THE CORE INVARIANT",
+        color=GREEN,
+        fontsize=8.5,
+        weight="bold",
+        ha="center",
     )
     ax.text(
-        6.66,
+        6.666,
         1.48,
         "Point-in-time data → transparent components → configurable policy → human decision",
         color=TEXT,
-        fontsize=13,
+        fontsize=11.5,
         weight="bold",
         ha="center",
     )
