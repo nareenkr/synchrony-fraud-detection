@@ -1,0 +1,96 @@
+name: synchrony-fraud-platform
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: synchrony
+      POSTGRES_USER: synchrony
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD before starting Compose}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U synchrony -d synchrony"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    environment:
+      APP_ENV: production
+      APP_HOST: 0.0.0.0
+      APP_PORT: 8000
+      DATABASE_URL: postgresql+psycopg://synchrony:${POSTGRES_PASSWORD}@postgres:5432/synchrony
+      PERSISTENCE_NAMESPACE: demo
+      STATE_BACKEND: redis
+      REDIS_URL: redis://redis:6379/0
+      PSEUDONYM_KEY: ${PSEUDONYM_KEY:?Set PSEUDONYM_KEY to at least 32 random characters}
+      MODEL_BUNDLE_PATH: artifacts/supervised-v1
+      ANOMALY_ARTIFACT_PATH: artifacts/anomaly-v1.joblib
+      CORS_ORIGINS: http://localhost:5173
+      RISK_CONFIG_PATH: config/risk.yaml
+      AUTH_ENABLED: "true"
+      API_READ_KEY: ${API_READ_KEY:?Set API_READ_KEY to at least 32 random characters}
+      API_ADMIN_KEY: ${API_ADMIN_KEY:?Set API_ADMIN_KEY to a distinct 32-character value}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import json,urllib.request; d=json.load(urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=3)); assert d['readiness']['status']=='ready'",
+        ]
+      interval: 10s
+      timeout: 5s
+      start_period: 30s
+      retries: 6
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: http://localhost:8000
+        VITE_AUTH_REQUIRED: "true"
+    ports:
+      - "5173:5173"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:5173/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+volumes:
+  postgres-data:

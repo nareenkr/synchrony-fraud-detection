@@ -1,0 +1,55 @@
+schema_version: 1
+base_dataset:
+  name: PaySim
+  kind: synthetic_mobile_money_transactions
+  limitation: Not lending-application ground truth; metrics do not establish production readiness.
+  source_fields:
+    - step
+    - type
+    - amount
+    - nameOrig
+    - oldbalanceOrg
+    - newbalanceOrig
+    - nameDest
+    - oldbalanceDest
+    - newbalanceDest
+    - isFraud
+    - isFlaggedFraud
+
+provenance_classes:
+  source: Present in the downloaded PaySim dataset.
+  derived_from_source: Deterministically calculated only from prior source events.
+  synthetic: Deterministically generated for lending realism and explicitly disclosed.
+
+features:
+  amount: {provenance: source, purpose: transaction or requested amount anchor}
+  transaction_step: {provenance: source, purpose: chronological replay ordering}
+  origin_balance_before: {provenance: source, purpose: amount deviation and capacity context}
+  origin_balance_after: {provenance: source, purpose: transaction context}
+  fraud_label: {provenance: source, purpose: supervised target, predictive_feature: false}
+  applications_last_hour: {provenance: derived_from_source, purpose: velocity}
+  applications_last_day: {provenance: derived_from_source, purpose: velocity}
+  transaction_frequency: {provenance: derived_from_source, purpose: behavioral baseline}
+  transaction_amount_deviation: {provenance: derived_from_source, purpose: behavioral anomaly}
+  account_age_days: {provenance: synthetic, purpose: account maturity}
+  device_id: {provenance: synthetic, purpose: shared entity and device change, persisted_raw: false}
+  ip_address: {provenance: synthetic, purpose: shared entity and location context, persisted_raw: false}
+  geographic_region: {provenance: synthetic, purpose: coarse unusual-location signal, proxy_risk: true}
+  device_changes_30d: {provenance: synthetic, purpose: device instability}
+  login_frequency_24h: {provenance: synthetic, purpose: behavioral context}
+  failed_login_attempts_24h: {provenance: synthetic, purpose: access abuse}
+  unusual_login_location: {provenance: synthetic, purpose: location change}
+  income: {provenance: synthetic, purpose: loan affordability context, sensitive_financial: true}
+  requested_loan_amount: {provenance: synthetic, purpose: lending request size, sensitive_financial: true}
+  debt_to_income_ratio: {provenance: synthetic, purpose: request context, sensitive_financial: true}
+  bank_account_age_days: {provenance: synthetic, purpose: bank relationship maturity}
+  previous_rejected_applications: {provenance: synthetic, purpose: prior application behavior}
+  shared_ip_user_count: {provenance: synthetic, purpose: graph and collusion signal}
+  shared_device_user_count: {provenance: synthetic, purpose: graph and collusion signal}
+  hour_of_day_deviation: {provenance: synthetic, purpose: time-of-day behavior}
+
+generation_policy:
+  seed: 20260819
+  stable_keying: row index plus pseudonymous entity key
+  split_order: chronological before fitting preprocessors
+  label_conditioning: Must be declared per generator and sensitivity-tested; never silently encode target.

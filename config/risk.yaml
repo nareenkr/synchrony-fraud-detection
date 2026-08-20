@@ -1,0 +1,13 @@
+schema_version: 1
+weights:
+  supervised: 0.38
+  anomaly: 0.12
+  behavioral: 0.35
+  graph: 0.15
+thresholds:
+  manual_review: 40.0
+  high_risk: 70.0
+labels:
+  approve: APPROVE
+  manual_review: MANUAL_REVIEW
+  high_risk: HIGH_RISK

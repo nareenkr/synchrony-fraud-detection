@@ -1,0 +1,279 @@
+{
+  "dataset_source": {
+    "generator": "training.prepare_data._development_source",
+    "kind": "development_fixture",
+    "oversampled_for_pipeline_verification": true
+  },
+  "geography_segmented": false,
+  "minimum_support": 5,
+  "overall": {
+    "confusion_matrix": {
+      "fn": 0,
+      "fp": 0,
+      "tn": 88,
+      "tp": 2
+    },
+    "false_positive_rate": 0.0,
+    "false_positive_rate_95ci": [
+      3.469446951953614e-18,
+      0.04182853957248131
+    ],
+    "fraud_cases": 2,
+    "precision": 1.0,
+    "recall": 1.0,
+    "recall_95ci": [
+      0.34237195288961925,
+      1.0
+    ],
+    "review_rate": 0.022222222222222223,
+    "support": 90
+  },
+  "prototype_decision_support_only": true,
+  "scope": "untouched chronological development_fixture test partition",
+  "segments": {
+    "account_tenure_band": {
+      "181-365d": {
+        "confusion_matrix": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 2,
+          "tp": 0
+        },
+        "false_positive_rate": 0.0,
+        "false_positive_rate_95ci": [
+          0.0,
+          0.6576280471103807
+        ],
+        "fraud_cases": 0,
+        "interpretation_suppressed": true,
+        "precision": null,
+        "recall": null,
+        "recall_95ci": null,
+        "review_rate": 0.0,
+        "support": 2
+      },
+      "366d+": {
+        "confusion_matrix": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 85,
+          "tp": 1
+        },
+        "false_positive_rate": 0.0,
+        "false_positive_rate_95ci": [
+          0.0,
+          0.04324100421424198
+        ],
+        "fraud_cases": 1,
+        "interpretation_suppressed": false,
+        "precision": 1.0,
+        "recall": 1.0,
+        "recall_95ci": [
+          0.20654329147389294,
+          1.0
+        ],
+        "review_rate": 0.011627906976744186,
+        "support": 86
+      },
+      "8-30d": {
+        "confusion_matrix": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 1
+        },
+        "false_positive_rate": 0.0,
+        "false_positive_rate_95ci": [
+          0.0,
+          0.7934567085261071
+        ],
+        "fraud_cases": 1,
+        "interpretation_suppressed": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "recall_95ci": [
+          0.20654329147389294,
+          1.0
+        ],
+        "review_rate": 0.5,
+        "support": 2
+      }
+    },
+    "data_completeness": {
+      "complete": {
+        "confusion_matrix": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 88,
+          "tp": 2
+        },
+        "false_positive_rate": 0.0,
+        "false_positive_rate_95ci": [
+          3.469446951953614e-18,
+          0.04182853957248131
+        ],
+        "fraud_cases": 2,
+        "interpretation_suppressed": false,
+        "precision": 1.0,
+        "recall": 1.0,
+        "recall_95ci": [
+          0.34237195288961925,
+          1.0
+        ],
+        "review_rate": 0.022222222222222223,
+        "support": 90
+      }
+    },
+    "loan_to_income_band": {
+      "0.25-0.75": {
+        "confusion_matrix": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 36,
+          "tp": 2
+        },
+        "false_positive_rate": 0.0,
+        "false_positive_rate_95ci": [
+          0.0,
+          0.09642183044857634
+        ],
+        "fraud_cases": 2,
+        "interpretation_suppressed": false,
+        "precision": 1.0,
+        "recall": 1.0,
+        "recall_95ci": [
+          0.34237195288961925,
+          1.0
+        ],
+        "review_rate": 0.05263157894736842,
+        "support": 38
+      },
+      "0.75-1.5": {
+        "confusion_matrix": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 7,
+          "tp": 0
+        },
+        "false_positive_rate": 0.0,
+        "false_positive_rate_95ci": [
+          0.0,
+          0.35433884297520657
+        ],
+        "fraud_cases": 0,
+        "interpretation_suppressed": false,
+        "precision": null,
+        "recall": null,
+        "recall_95ci": null,
+        "review_rate": 0.0,
+        "support": 7
+      },
+      "<=0.25": {
+        "confusion_matrix": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 44,
+          "tp": 0
+        },
+        "false_positive_rate": 0.0,
+        "false_positive_rate_95ci": [
+          6.938893903907228e-18,
+          0.08029831778201396
+        ],
+        "fraud_cases": 0,
+        "interpretation_suppressed": false,
+        "precision": null,
+        "recall": null,
+        "recall_95ci": null,
+        "review_rate": 0.0,
+        "support": 44
+      },
+      ">1.5": {
+        "confusion_matrix": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "false_positive_rate": 0.0,
+        "false_positive_rate_95ci": [
+          0.0,
+          0.7934567085261071
+        ],
+        "fraud_cases": 0,
+        "interpretation_suppressed": true,
+        "precision": null,
+        "recall": null,
+        "recall_95ci": null,
+        "review_rate": 0.0,
+        "support": 1
+      }
+    },
+    "requested_amount_tertile": {
+      "lower": {
+        "confusion_matrix": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 30,
+          "tp": 0
+        },
+        "false_positive_rate": 0.0,
+        "false_positive_rate_95ci": [
+          0.0,
+          0.113517091390478
+        ],
+        "fraud_cases": 0,
+        "interpretation_suppressed": false,
+        "precision": null,
+        "recall": null,
+        "recall_95ci": null,
+        "review_rate": 0.0,
+        "support": 30
+      },
+      "middle": {
+        "confusion_matrix": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 28,
+          "tp": 2
+        },
+        "false_positive_rate": 0.0,
+        "false_positive_rate_95ci": [
+          0.0,
+          0.12064720365810762
+        ],
+        "fraud_cases": 2,
+        "interpretation_suppressed": false,
+        "precision": 1.0,
+        "recall": 1.0,
+        "recall_95ci": [
+          0.34237195288961925,
+          1.0
+        ],
+        "review_rate": 0.06666666666666667,
+        "support": 30
+      },
+      "upper": {
+        "confusion_matrix": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 30,
+          "tp": 0
+        },
+        "false_positive_rate": 0.0,
+        "false_positive_rate_95ci": [
+          0.0,
+          0.113517091390478
+        ],
+        "fraud_cases": 0,
+        "interpretation_suppressed": false,
+        "precision": null,
+        "recall": null,
+        "recall_95ci": null,
+        "review_rate": 0.0,
+        "support": 30
+      }
+    }
+  },
+  "sensitive_features_used": []
+}
