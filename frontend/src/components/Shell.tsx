@@ -15,6 +15,7 @@ export function Shell() {
       </NavLink>
       <nav aria-label="Primary navigation">
         <NavLink to="/" end><span aria-hidden="true">◇</span> Monitoring</NavLink>
+        <NavLink to="/applications/new"><span aria-hidden="true">＋</span> Assess application</NavLink>
         <NavLink to="/model-info"><span aria-hidden="true">◎</span> Model info</NavLink>
       </nav>
       <div className="sidebar-note"><span className="status-dot" />System ready<p>Local prototype</p></div>

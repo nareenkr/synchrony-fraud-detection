@@ -36,6 +36,10 @@ Optionally open **Random stream** and show the bounded count, events-per-second,
 controls. Explain that the generator is random-looking but seeded for replay, and that suspicious
 bursts and fraud-ring relationships are correlated rather than independently random fields.
 
+Optionally open **Assess application**, enter an opaque synthetic application ID, requested amount,
+income, channel, and behaviour observations, and submit it. Explain that manual entries and
+simulated entries use the identical validation, feature, ML, explanation, and persistence path.
+
 ### 2:20-3:10 — investigation and explainability
 
 Open a high-risk row. Show the 0-100 score, decision, four component scores, curated reasons,

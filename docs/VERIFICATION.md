@@ -14,9 +14,10 @@ that synthetic-data metrics establish production fitness.
 | Feedback/adaptation | persistence, API, and frontend tests | Investigator outcome upsert, pseudonymous reviewer boundary, false-positive/missed-fraud aggregation, and governed retraining status pass |
 | Access control | protected FastAPI test client | Public health; unauthenticated denial; reader GET-only; admin mutation; production fail-closed |
 | Python dependencies | `python -m pip check` | No broken requirements |
-| Frontend tests | `npm.cmd test -- --run` | 3 files, 5 tests passed |
+| Frontend tests | `npm.cmd test -- --run` | 4 files, 6 tests passed |
+| Manual assessment | component test plus live HTTP prediction/detail | Typed form values call `/predict`; the persisted investigation returned channel, score, decision, action, and model version |
 | Random stream | seeded generator, API, and dashboard tests | Exact weighted mix, deterministic replay, correlation preservation, bounds, and real decisioning path pass |
-| Frontend production build | `npm.cmd run build` | TypeScript and Vite build passed; 682 modules transformed |
+| Frontend production build | `npm.cmd run build` | TypeScript and Vite build passed; 683 modules transformed |
 | Frontend dependencies | `npm.cmd audit --audit-level=high` | 0 vulnerabilities reported |
 | Compose interpolation | runtime-only PostgreSQL/HMAC secrets plus `docker compose config --quiet` | Pass |
 | PowerShell scripts | PowerShell parser over `scripts/*.ps1` | Pass |

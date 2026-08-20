@@ -12,3 +12,5 @@ export interface DemoStatus { running?: boolean; status?: string; message?: stri
 export interface RandomDemoRequest { count: number; interval_ms: number; seed: number; normal_percent: number; suspicious_percent: number; fraud_percent: number }
 export interface LearningStatus { reviewed_applications: number; confirmed_fraud: number; legitimate: number; inconclusive: number; false_positive_reviews: number; missed_fraud_reviews: number; reviewed_alerts: number; false_positive_review_rate: number; minimum_feedback_required: number; retraining_recommended: boolean; governance_status: "COLLECTING_FEEDBACK" | "RETRAINING_REVIEW_REQUIRED" | "MONITORING" }
 export interface InvestigatorReview { application_id: string; outcome: InvestigatorOutcome; reviewed_at: string }
+export type LoanApplicationInput = Record<string, string | number | boolean>;
+export interface AssessmentResult { application_id: string; risk_score: number; decision: Decision }

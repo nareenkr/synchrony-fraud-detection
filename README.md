@@ -133,6 +133,15 @@ Dashboard endpoints include `GET /applications`, `GET /applications/{id}`, `GET 
 `POST /applications/{id}/review`, `GET /learning/status`, and
 the `/demo/run`, `/demo/random/run`, `/demo/status`, `/demo/stop`, and `/demo/reset` controls.
 
+### Manual loan assessment
+
+Open **Assess application** in the dashboard to enter a synthetic loan request manually. The form
+supports the full validated event contract: loan and income values, account tenure, lending
+channel, opaque device/IP/bank links, login observations, and recent transaction behaviour. It
+calls the same `POST /predict` endpoint as the simulators, then opens the persisted investigation
+with the ML risk score, decision, component scores, reasons, and recommended action. Do not enter
+real customer or personal data into this prototype.
+
 An investigator can label an assessed case as `CONFIRMED_FRAUD`, `LEGITIMATE`, or `INCONCLUSIVE`.
 The reviewer reference is HMAC-pseudonymized and never returned. Learning status aggregates only
 verified outcomes. Before the minimum evidence threshold it remains `COLLECTING_FEEDBACK`; after

@@ -1,4 +1,4 @@
-import type { Analytics, ApplicationAssessment, Decision, DemoStatus, InvestigatorOutcome, InvestigatorReview, LearningStatus, ModelInfo, RandomDemoRequest } from "./types";
+import type { Analytics, ApplicationAssessment, AssessmentResult, Decision, DemoStatus, InvestigatorOutcome, InvestigatorReview, LearningStatus, LoanApplicationInput, ModelInfo, RandomDemoRequest } from "./types";
 const API_BASE = (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/$/, "");
 const ACCESS_KEY_STORAGE = "synchrony-api-access-key";
 export const authRequired = import.meta.env.VITE_AUTH_REQUIRED === "true";
@@ -21,6 +21,7 @@ export function normalizeAnalytics(raw: Record<string, unknown>): Analytics {
   return { total_applications: total, approved_applications: approved, manual_review_applications: review, high_risk_applications: highRisk, average_risk_score: numeric(raw.average_risk_score), fraud_rate: raw.fraud_rate === undefined && raw.fraud_high_risk_rate === undefined ? (total ? highRisk / total : 0) : numeric(raw.fraud_rate ?? raw.fraud_high_risk_rate), decision_distribution: Object.fromEntries(decisions.map((decision) => [decision, numeric(distribution[decision]) || ({ APPROVE: approved, MANUAL_REVIEW: review, HIGH_RISK: highRisk }[decision])])) as Record<Decision, number>, risk_trend: Array.isArray(raw.risk_trend) ? raw.risk_trend as Analytics["risk_trend"] : [] };
 }
 export const api = {
+  assess: (payload: LoanApplicationInput) => request<AssessmentResult>("/predict", { method: "POST", body: JSON.stringify(payload) }),
   applications: async () => normalizeApplications(await request<ApplicationAssessment[] | { applications?: ApplicationAssessment[]; items?: ApplicationAssessment[] }>("/applications?limit=50&offset=0")),
   application: (id: string) => request<ApplicationAssessment>(`/applications/${encodeURIComponent(id)}`),
   analytics: async () => normalizeAnalytics(await request<Record<string, unknown>>("/analytics")),

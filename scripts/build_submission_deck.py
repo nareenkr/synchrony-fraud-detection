@@ -531,7 +531,7 @@ def product_slide(pdf: PdfPages) -> None:
         ax,
         [
             "Seeded scenarios span web, mobile, partner API, and agent channels.",
-            "Every event calls the real /predict path.",
+            "Manual entries and seeded events call the same real /predict path.",
             "One-second polling shows persisted results.",
             "Investigations expose an action and verified-outcome controls.",
             "Reset and replay are deterministic and tested.",
